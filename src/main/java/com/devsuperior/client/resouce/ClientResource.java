@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/client")
+@RequestMapping(value = "/clients")
 public class ClientResource {
 
     @Autowired
@@ -40,4 +40,29 @@ public class ClientResource {
         return ResponseEntity.ok().body(client);
     }
 
+    @PostMapping
+    public ResponseEntity<ClientDTO> insert(@RequestBody ClientDTO dto){
+
+        ClientDTO client = clientService.insert(dto);
+
+        return ResponseEntity.ok().body(client);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ClientDTO> update(
+            @PathVariable Long id,
+            @RequestBody ClientDTO dto){
+
+        ClientDTO client = clientService.update(id,dto);
+
+        return ResponseEntity.ok().body(client);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<ClientDTO> delete(@PathVariable Long id){
+
+        clientService.delete(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }
